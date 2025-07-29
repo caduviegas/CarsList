@@ -4,7 +4,7 @@ import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.User
 import java.time.LocalDate
 
-interface CarRepository {
+interface CarApiRepository {
     suspend fun fetchCars(): List<Car>
     suspend fun postOrderCar(
         pedidoId: String,

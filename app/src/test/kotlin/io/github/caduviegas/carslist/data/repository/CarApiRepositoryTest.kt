@@ -10,7 +10,7 @@ import io.github.caduviegas.carslist.data.model.OrderCarDTO
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.FuelType
 import io.github.caduviegas.carslist.domain.model.User
-import io.github.caduviegas.carslist.domain.repository.CarRepository
+import io.github.caduviegas.carslist.domain.repository.CarApiRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -22,18 +22,18 @@ import org.junit.Test
 import java.time.LocalDate
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CarRepositoryImplTest {
+class CarApiRepositoryTest {
 
     private val apiService: CarApiService = mockk()
     private val carMapper: CarMapper = mockk()
     private val orderCarMapper: OrderCarMapper = mockk()
     private val testDispatcher = StandardTestDispatcher()
 
-    private lateinit var repository: CarRepository
+    private lateinit var repository: CarApiRepository
 
     @Before
     fun setUp() {
-        repository = CarRepositoryImpl(apiService, carMapper, orderCarMapper, testDispatcher)
+        repository = CarApiRepositoryImpl(apiService, carMapper, orderCarMapper, testDispatcher)
     }
 
     @Test
