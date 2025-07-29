@@ -1,4 +1,4 @@
-package io.github.caduviegas.carslist.db.converter
+package io.github.caduviegas.carslist.data.db.converter
 
 import androidx.room.TypeConverter
 import java.time.Instant

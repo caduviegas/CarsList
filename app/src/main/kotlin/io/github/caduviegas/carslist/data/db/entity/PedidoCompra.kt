@@ -1,4 +1,4 @@
-package io.github.caduviegas.carslist.db.entity
+package io.github.caduviegas.carslist.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

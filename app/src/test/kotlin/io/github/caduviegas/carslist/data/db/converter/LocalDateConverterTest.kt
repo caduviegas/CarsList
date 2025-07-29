@@ -1,4 +1,4 @@
-package io.github.caduviegas.carslist.db.converter
+package io.github.caduviegas.carslist.data.db.converter
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test

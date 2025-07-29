@@ -1,4 +1,4 @@
-package io.github.caduviegas.carslist.db.dao
+package io.github.caduviegas.carslist.data.db.dao
 
 import android.content.Context
 import androidx.room.Room
