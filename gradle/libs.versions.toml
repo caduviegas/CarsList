@@ -1,5 +1,5 @@
 [versions]
-agp = "8.1.4"
+agp = "8.6.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.27"
 coreKtx = "1.16.0"
@@ -7,6 +7,8 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.1"
+testCoreKtx = "1.6.1"
+robolectric = "4.12.1"
 material = "1.12.0"
 room = "2.7.2"
 retrofit = "2.9.0"
@@ -14,7 +16,6 @@ okhttp = "4.12.0"
 coroutines = "1.10.2"
 lifecycle = "2.9.2"
 composeBom = "2025.07.00"
-composeCompiler = "1.5.14"
 truth = "1.4.2"
 mockk = "1.13.10"
 activityCompose = "1.10.1"
@@ -22,7 +23,6 @@ navigationCompose = "2.9.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -51,10 +51,14 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+test-junit = { group = "junit", name = "junit", version.ref = "junit" }
+test-robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+test-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+test-androidx-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "testCoreKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

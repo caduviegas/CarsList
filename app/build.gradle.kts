@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -39,9 +40,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
@@ -71,9 +69,11 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.navigation.compose)
 
-    testImplementation(libs.junit)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
+    testImplementation(libs.test.junit)
+    testImplementation(libs.test.robolectric)
+    testImplementation(libs.test.truth)
+    testImplementation(libs.test.mockk)
+    testImplementation(libs.test.androidx.core.ktx)
     testImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
