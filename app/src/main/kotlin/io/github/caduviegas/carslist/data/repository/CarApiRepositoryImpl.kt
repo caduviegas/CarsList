@@ -23,13 +23,13 @@ class CarApiRepositoryImpl(
     }
 
     override suspend fun postOrderCar(
-        pedidoId: String,
-        dataPedido: LocalDate,
+        orderId: String,
+        orderDate: LocalDate,
         status: String,
-        usuario: User,
-        carro: Car
+        user: User,
+        car: Car
     ) = withContext(dispatcher) {
-        val orderCarDTO = orderCarMapper.toOrderCarDTO(pedidoId, dataPedido, status, usuario, carro)
+        val orderCarDTO = orderCarMapper.toOrderCarDTO(orderId, orderDate, status, user, car)
         apiService.postOrderCar(orderCarDTO)
     }
 }

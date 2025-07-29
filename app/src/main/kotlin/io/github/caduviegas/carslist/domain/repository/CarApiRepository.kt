@@ -7,10 +7,10 @@ import java.time.LocalDate
 interface CarApiRepository {
     suspend fun fetchCars(): List<Car>
     suspend fun postOrderCar(
-        pedidoId: String,
-        dataPedido: LocalDate,
+        orderId: String,
+        orderDate: LocalDate,
         status: String,
-        usuario: User,
-        carro: Car
+        user: User,
+        car: Car
     )
 }
