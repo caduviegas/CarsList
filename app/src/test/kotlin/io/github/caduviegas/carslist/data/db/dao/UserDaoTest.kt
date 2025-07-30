@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import io.github.caduviegas.carslist.db.entity.User
-import io.github.caduviegas.carslist.db.CarsDatabase
+import io.github.caduviegas.carslist.data.db.CarsDatabase
+import io.github.caduviegas.carslist.data.db.entity.User
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -36,7 +37,7 @@ class UserDaoTest {
     }
 
     @Test
-    fun `should insert user and get logged user`() {
+    fun `should insert user and get logged user`() = runBlocking {
         val user = User(
             cpf = "12345678900",
             name = "João da Silva",
@@ -50,7 +51,7 @@ class UserDaoTest {
     }
 
     @Test
-    fun `should return true for hasLoggedUser when user exists`() {
+    fun `should return true for hasLoggedUser when user exists`() = runBlocking {
         val user = User(
             cpf = "12345678900",
             name = "João da Silva",
@@ -62,7 +63,7 @@ class UserDaoTest {
     }
 
     @Test
-    fun `should replace user on conflict when inserting`() {
+    fun `should replace user on conflict when inserting`() = runBlocking {
         val user1 = User("123", "A", "a@email.com")
         val user2 = User("123", "B", "b@email.com")
         userDao.insertUser(user1)
@@ -72,7 +73,7 @@ class UserDaoTest {
     }
 
     @Test
-    fun `should insert user with null fields`() {
+    fun `should insert user with null fields`() = runBlocking {
         val user = User(
             cpf = "999",
             name = "No Phone",
@@ -88,21 +89,28 @@ class UserDaoTest {
     }
 
     @Test
-    fun `should return false for hasLoggedUser when no user exists`() {
+    fun `should return false for hasLoggedUser when no user exists`() = runBlocking {
         val result = userDao.hasLoggedUser()
         assertThat(result).isFalse()
     }
 
     @Test
-    fun `should remove user by cpf`() {
+    fun `should remove all users`() = runBlocking {
         val user = User(
             cpf = "12345678900",
             name = "João da Silva",
             email = "joao@email.com"
         )
         userDao.insertUser(user)
-        userDao.deleteUserByCpf("12345678900")
+        userDao.deleteAllUsers()
         val hasUser = userDao.hasLoggedUser()
         assertThat(hasUser).isFalse()
+    }
+
+    @Test(expected = Exception::class)
+    fun `getLoggedUser should throw when no user exists`(){
+        runBlocking {
+            userDao.getLoggedUser()
+        }
     }
 }

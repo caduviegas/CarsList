@@ -1,29 +1,25 @@
 package io.github.caduviegas.carslist.domain.usecase
 
-import io.github.caduviegas.carslist.domain.model.Car
-import io.github.caduviegas.carslist.domain.model.User
+import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
+import io.github.caduviegas.carslist.domain.model.LeadStatus
 import io.github.caduviegas.carslist.domain.repository.CarApiRepository
+import io.github.caduviegas.carslist.domain.repository.CarDatabaseRepository
 import io.github.caduviegas.carslist.domain.util.OrderConstants
-import java.time.LocalDate
-import java.util.UUID
 
 class SyncLeadUseCase(
-    private val repository: CarApiRepository
+    private val apiRepository: CarApiRepository,
+    private val databaseRepository: CarDatabaseRepository
 ) {
-    suspend operator fun invoke(
-        user: User,
-        car: Car
-    ) {
-        val pedidoId = UUID.randomUUID().toString()
-        val dataPedido = LocalDate.now()
-        val status = OrderConstants.STATUS_ORDERED
-
-        repository.postOrderCar(
-            orderId = pedidoId,
-            orderDate = dataPedido,
-            status = status,
-            user = user,
-            car = car
-        )
+    suspend operator fun invoke(): LeadStatus {
+        return try {
+            val notSyncedLeads = databaseRepository.retrieveNotSyncedLeads()
+            notSyncedLeads.forEach { lead ->
+                apiRepository.postOrderCar(lead)
+                databaseRepository.updateLeadStatus(lead.id, OrderConstants.STATUS_SYNCED)
+            }
+            LeadStatus.UPDATED
+        } catch (_: UserNotLoggedInException) {
+            LeadStatus.NO_USER_LOGGED
+        }
     }
 }

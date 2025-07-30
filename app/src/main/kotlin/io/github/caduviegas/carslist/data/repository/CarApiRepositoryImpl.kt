@@ -4,6 +4,7 @@ import io.github.caduviegas.carslist.data.api.CarApiService
 import io.github.caduviegas.carslist.data.mapper.CarMapper
 import io.github.caduviegas.carslist.data.mapper.OrderCarMapper
 import io.github.caduviegas.carslist.domain.model.Car
+import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
 import io.github.caduviegas.carslist.domain.repository.CarApiRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,14 +23,8 @@ class CarApiRepositoryImpl(
         mapper.mapList(response.cars)
     }
 
-    override suspend fun postOrderCar(
-        orderId: String,
-        orderDate: LocalDate,
-        status: String,
-        user: User,
-        car: Car
-    ) = withContext(dispatcher) {
-        val orderCarDTO = orderCarMapper.toOrderCarDTO(orderId, orderDate, status, user, car)
+    override suspend fun postOrderCar(lead: Lead) = withContext(dispatcher) {
+        val orderCarDTO = orderCarMapper.toOrderCarDTO(lead)
         apiService.postOrderCar(orderCarDTO)
     }
 }

@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Entity
 data class PedidoCompra(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int,
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "carro_id") val carroId: Int,
     @ColumnInfo(name = "timestamp_cadastro") val cadastro: LocalDate,
     @ColumnInfo(name = "modelo_id") val modeloId: Int,

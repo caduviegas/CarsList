@@ -5,6 +5,7 @@ import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.data.model.UserDTO
 import io.github.caduviegas.carslist.data.model.CarInfoDTO
 import io.github.caduviegas.carslist.data.model.OrderCarDTO
+import io.github.caduviegas.carslist.domain.model.Lead
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -15,7 +16,10 @@ class OrderCarMapper {
             name = user.name,
             email = user.email,
             phone = user.phone,
-            birthDate = user.birthday.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000
+            birthDate = user.birthday
+                ?.atStartOfDay(ZoneId.systemDefault())
+                ?.toEpochSecond()
+                ?.times(1000)
         )
 
     fun toCarInfoDTO(car: Car): CarInfoDTO =
@@ -24,18 +28,12 @@ class OrderCarMapper {
             modelId = car.modeloId
         )
 
-    fun toOrderCarDTO(
-        orderId: String,
-        orderDate: LocalDate,
-        status: String,
-        user: User,
-        car: Car
-    ): OrderCarDTO =
+    fun toOrderCarDTO(lead: Lead): OrderCarDTO =
         OrderCarDTO(
-            orderId = orderId,
-            orderDate = orderDate.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000,
-            status = status,
-            user = toUserDTO(user),
-            car = toCarInfoDTO(car)
+            orderId = lead.id,
+            orderDate = lead.date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000,
+            status = lead.status,
+            user = toUserDTO(lead.user),
+            car = toCarInfoDTO(lead.car)
         )
 }

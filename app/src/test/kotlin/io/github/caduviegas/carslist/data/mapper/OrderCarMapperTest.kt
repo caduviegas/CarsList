@@ -6,10 +6,12 @@ import io.github.caduviegas.carslist.data.model.OrderCarDTO
 import io.github.caduviegas.carslist.data.model.UserDTO
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.FuelType
+import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
 import org.junit.Test
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.UUID
 
 class OrderCarMapperTest {
 
@@ -37,6 +39,20 @@ class OrderCarMapperTest {
     }
 
     @Test
+    fun `toUserDTO maps User with null birthday to UserDTO with null birthDate`() {
+        val user = User(
+            cpf = "12345678900",
+            name = "João da Silva",
+            email = "joao@email.com",
+            phone = "11999999999",
+            birthday = null
+        )
+
+        val userDTO = mapper.toUserDTO(user)
+        assertThat(userDTO.birthDate).isNull()
+    }
+
+    @Test
     fun `toCarInfoDTO maps Car to CarInfoDTO correctly`() {
         val car = Car(
             id = 1,
@@ -57,7 +73,7 @@ class OrderCarMapperTest {
     }
 
     @Test
-    fun `toOrderCarDTO maps all fields correctly`() {
+    fun `toOrderCarDTO maps all fields from Lead correctly`() {
         val birthday = LocalDate.of(1990, 5, 20)
         val user = User(
             cpf = "12345678900",
@@ -77,11 +93,18 @@ class OrderCarMapperTest {
             nomeModelo = "Model Y",
             valor = 100000.0
         )
-        val orderId = "ORDER123"
+        val orderId = UUID.randomUUID().toString()
         val orderDate = LocalDate.of(2024, 6, 1)
         val status = "PENDING"
+        val lead = Lead(
+            id = orderId,
+            date = orderDate,
+            status = status,
+            car = car,
+            user = user
+        )
 
-        val orderCarDTO = mapper.toOrderCarDTO(orderId, orderDate, status, user, car)
+        val orderCarDTO = mapper.toOrderCarDTO(lead)
         val expectedOrderDate = orderDate.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000
         val expectedUserDTO = mapper.toUserDTO(user)
         val expectedCarInfoDTO = mapper.toCarInfoDTO(car)

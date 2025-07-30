@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import io.github.caduviegas.carslist.db.CarsDatabase
-import io.github.caduviegas.carslist.db.entity.PedidoCompra
+import io.github.caduviegas.carslist.data.db.CarsDatabase
+import io.github.caduviegas.carslist.data.db.entity.PedidoCompra
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -36,15 +37,15 @@ class PedidoCompraDaoTest {
     }
 
     private fun makePedido(
-        id: Int = 0,
+        id: String = "id-1",
         carroId: Int = 1,
         cadastro: LocalDate = LocalDate.of(2024, 6, 1),
         modeloId: Int = 10,
         ano: Int = 2022,
-        combustivel: String = "Gasoline",
+        combustivel: String = "Gasolina",
         numPortas: Int = 4,
-        cor: String = "Black",
-        nomeModelo: String = "Sedan",
+        cor: String = "Prata",
+        nomeModelo: String = "Tesla Model Y",
         valor: Double = 50000.0,
         dataPedido: LocalDate = LocalDate.of(2024, 6, 2),
         cpfCliente: String = "12345678900",
@@ -55,7 +56,7 @@ class PedidoCompraDaoTest {
     )
 
     @Test
-    fun `should insert an order and return all orders`() {
+    fun `should insert an order and return all orders`() = runBlocking {
         val pedido = makePedido()
         dao.insertPedido(pedido)
         val pedidos = dao.getAllPedidos()
@@ -65,9 +66,9 @@ class PedidoCompraDaoTest {
     }
 
     @Test
-    fun `should fetch orders by carId correctly`() {
-        val pedido1 = makePedido(carroId = 1)
-        val pedido2 = makePedido(carroId = 2)
+    fun `should fetch orders by carId correctly`() = runBlocking {
+        val pedido1 = makePedido(id = "id-1", carroId = 1)
+        val pedido2 = makePedido(id = "id-2", carroId = 2)
         dao.insertPedido(pedido1)
         dao.insertPedido(pedido2)
         val pedidosCarro = dao.getPedidosByCarroId(1)
@@ -76,33 +77,56 @@ class PedidoCompraDaoTest {
     }
 
     @Test
-    fun `should update the order status`() {
-        val pedido = makePedido()
+    fun `should update the order status`() = runBlocking {
+        val pedido = makePedido(id = "id-1")
         dao.insertPedido(pedido)
-        val pedidoId = dao.getAllPedidos().first().id
-        dao.updateStatusPedido(pedidoId, "APPROVED")
+        dao.updateStatusPedido("id-1", "APPROVED")
         val updated = dao.getAllPedidos().first()
         assertThat(updated.statusPedido).isEqualTo("APPROVED")
     }
 
     @Test
-    fun `should remove all orders`() {
-        dao.insertPedido(makePedido())
-        dao.insertPedido(makePedido(carroId = 2))
+    fun `should not update status if id does not exist`() = runBlocking {
+        val pedido = makePedido(id = "id-1")
+        dao.insertPedido(pedido)
+        dao.updateStatusPedido("id-2", "APPROVED")
+        val unchanged = dao.getAllPedidos().first()
+        assertThat(unchanged.statusPedido).isEqualTo("PENDING")
+    }
+
+    @Test
+    fun `should remove all orders`() = runBlocking {
+        dao.insertPedido(makePedido(id = "id-1"))
+        dao.insertPedido(makePedido(id = "id-2", carroId = 2))
         dao.deleteAllPedidos()
         val pedidos = dao.getAllPedidos()
         assertThat(pedidos).isEmpty()
     }
 
     @Test
-    fun `should insert multiple orders and return all`() {
+    fun `should insert multiple orders and return all`() = runBlocking {
         val pedidos = listOf(
-            makePedido(carroId = 1),
-            makePedido(carroId = 2),
-            makePedido(carroId = 3)
+            makePedido(id = "id-1", carroId = 1),
+            makePedido(id = "id-2", carroId = 2),
+            makePedido(id = "id-3", carroId = 3)
         )
         pedidos.forEach { dao.insertPedido(it) }
         val allPedidos = dao.getAllPedidos()
         assertThat(allPedidos).hasSize(3)
+    }
+
+    @Test
+    fun `should fetch orders by status correctly`() = runBlocking {
+        val pedido1 = makePedido(id = "id-1", statusPedido = "PENDING")
+        val pedido2 = makePedido(id = "id-2", statusPedido = "APPROVED")
+        val pedido3 = makePedido(id = "id-3", statusPedido = "PENDING")
+        dao.insertPedido(pedido1)
+        dao.insertPedido(pedido2)
+        dao.insertPedido(pedido3)
+        val pendings = dao.getAllByStatus("PENDING")
+        val approveds = dao.getAllByStatus("APPROVED")
+        assertThat(pendings).hasSize(2)
+        assertThat(approveds).hasSize(1)
+        assertThat(approveds.first().id).isEqualTo("id-2")
     }
 }
