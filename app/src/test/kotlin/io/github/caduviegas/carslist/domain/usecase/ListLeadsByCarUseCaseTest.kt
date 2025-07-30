@@ -69,7 +69,7 @@ class ListLeadsByCarUseCaseTest {
 
         try {
             useCase(carId)
-            assertThat("Exception").isNull() // Should not reach here
+            assertThat("Exception").isNull()
         } catch (e: Exception) {
             assertThat(e).isInstanceOf(RuntimeException::class.java)
             assertThat(e.message).isEqualTo("Repository error")

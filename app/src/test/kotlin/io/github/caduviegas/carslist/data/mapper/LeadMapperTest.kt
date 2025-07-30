@@ -17,8 +17,8 @@ class LeadMapperTest {
         ano: Int = 2022,
         combustivel: String = "FLEX",
         numPortas: Int = 4,
-        cor: String = "Azul",
-        nomeModelo: String = "Sedan",
+        cor: String = "Prata",
+        nomeModelo: String = "Tesla Model Y",
         valor: Double = 75000.0,
         dataPedido: LocalDate = LocalDate.of(2024, 6, 2),
         cpfCliente: String = "12345678900",
@@ -48,7 +48,6 @@ class LeadMapperTest {
         assertThat(lead.date).isEqualTo(leadEntity.dataPedido)
         assertThat(lead.status).isEqualTo(leadEntity.statusPedido)
 
-        // Car mapping
         assertThat(lead.car.id).isEqualTo(leadEntity.carroId)
         assertThat(lead.car.cadastro).isEqualTo(leadEntity.cadastro)
         assertThat(lead.car.modeloId).isEqualTo(leadEntity.modeloId)
@@ -59,7 +58,6 @@ class LeadMapperTest {
         assertThat(lead.car.nomeModelo).isEqualTo(leadEntity.nomeModelo)
         assertThat(lead.car.valor).isEqualTo(leadEntity.valor)
 
-        // User mapping
         assertThat(lead.user.cpf).isEqualTo(userEntity.cpf)
         assertThat(lead.user.name).isEqualTo(userEntity.name)
         assertThat(lead.user.email).isEqualTo(userEntity.email)
@@ -79,10 +77,9 @@ class LeadMapperTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun `should throw if combustivel is not a valid FuelType`() {
+    fun `should throw if fuel is not a valid FuelType`() {
         val leadEntity = makeLeadEntity(combustivel = "INVALID_FUEL")
         val userEntity = makeUserEntity()
-        // Deve lançar IllegalArgumentException ao tentar FuelType.valueOf("INVALID_FUEL")
         LeadMapper.toLead(leadEntity, userEntity)
     }
 }
