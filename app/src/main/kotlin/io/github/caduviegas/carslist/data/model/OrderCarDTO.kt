@@ -6,8 +6,8 @@ data class UserDTO(
     @SerializedName("cpf") val cpf: String,
     @SerializedName("nome") val name: String,
     @SerializedName("email") val email: String,
-    @SerializedName("telefone") val phone: String,
-    @SerializedName("data_nascimento") val birthDate: Long
+    @SerializedName("telefone") val phone: String?,
+    @SerializedName("data_nascimento") val birthDate: Long?
 )
 
 data class CarInfoDTO(

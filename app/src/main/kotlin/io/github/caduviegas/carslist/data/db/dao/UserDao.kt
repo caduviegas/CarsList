@@ -9,14 +9,14 @@ import io.github.caduviegas.carslist.data.db.entity.User
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User)
+    suspend fun insertUser(user: User)
 
     @Query("SELECT EXISTS(SELECT 1 FROM user LIMIT 1)")
-    fun hasLoggedUser(): Boolean
+    suspend fun hasLoggedUser(): Boolean
 
     @Query("SELECT * FROM user LIMIT 1")
-    fun getLoggedUser(): User
+    suspend fun getLoggedUser(): User
 
-    @Query("DELETE FROM user WHERE cpf = :cpf")
-    fun deleteUserByCpf(cpf: String)
+    @Query("DELETE FROM user")
+    suspend fun deleteAllUsers()
 }

@@ -101,7 +101,7 @@ class UserDaoTest {
             email = "joao@email.com"
         )
         userDao.insertUser(user)
-        userDao.deleteUserByCpf("12345678900")
+        userDao.deleteAllUsers("12345678900")
         val hasUser = userDao.hasLoggedUser()
         assertThat(hasUser).isFalse()
     }

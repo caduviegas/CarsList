@@ -75,7 +75,7 @@ class SyncLeadUseCaseTest {
                 car = any()
             )
         }
-        assertThat(statusSlot.captured).isEqualTo(OrderConstants.STATUS_ORDERED)
+        assertThat(statusSlot.captured).isEqualTo(OrderConstants.STATUS_NEW)
         assertThat(userSlot.captured).isEqualTo(user)
         assertThat(carSlot.captured).isEqualTo(car)
         assertThat(orderIdSlot.captured).isNotEmpty()

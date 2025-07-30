@@ -9,17 +9,20 @@ import io.github.caduviegas.carslist.data.db.entity.PedidoCompra
 @Dao
 interface PedidoCompraDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPedido(pedido: PedidoCompra)
+    suspend fun insertPedido(lead: PedidoCompra)
 
-    @Query("UPDATE PedidoCompra SET status_pedido = :novoStatus WHERE id = :pedidoId")
-    fun updateStatusPedido(pedidoId: Int, novoStatus: String)
+    @Query("UPDATE PedidoCompra SET status_pedido = :newStatus WHERE id = :leadId")
+    suspend fun updateStatusPedido(leadId: String, newStatus: String)
 
     @Query("DELETE FROM PedidoCompra")
-    fun deleteAllPedidos()
+    suspend fun deleteAllPedidos()
 
-    @Query("SELECT * FROM PedidoCompra WHERE carro_id = :carroId")
-    fun getPedidosByCarroId(carroId: Int): List<PedidoCompra>
+    @Query("SELECT * FROM PedidoCompra WHERE carro_id = :carId")
+    suspend fun getPedidosByCarroId(carId: Int): List<PedidoCompra>
+
+    @Query("SELECT * FROM PedidoCompra WHERE status_pedido = :status")
+    suspend fun getAllByStatus(status: String): List<PedidoCompra>
 
     @Query("SELECT * FROM PedidoCompra")
-    fun getAllPedidos(): List<PedidoCompra>
+    suspend fun getAllPedidos(): List<PedidoCompra>
 }
