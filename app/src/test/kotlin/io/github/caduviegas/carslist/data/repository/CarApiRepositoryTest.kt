@@ -9,6 +9,7 @@ import io.github.caduviegas.carslist.data.model.CarsApiResponse
 import io.github.caduviegas.carslist.data.model.OrderCarDTO
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.FuelType
+import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
 import io.github.caduviegas.carslist.domain.repository.CarApiRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -68,6 +69,7 @@ class CarApiRepositoryTest {
 
         coEvery { apiService.getCars() } returns apiResponse
         coEvery { carMapper.mapList(carDtoList) } returns mappedCars
+
         val result = repository.fetchCars()
         assertThat(result).isEqualTo(mappedCars)
     }
@@ -79,23 +81,21 @@ class CarApiRepositoryTest {
         val mappedCars = emptyList<Car>()
         coEvery { apiService.getCars() } returns apiResponse
         coEvery { carMapper.mapList(carDtoList) } returns mappedCars
+
         val result = repository.fetchCars()
         assertThat(result).isEmpty()
     }
 
     @Test
-    fun `postOrderCar calls apiService with mapped DTO`() = runTest(testDispatcher) {
-        val pedidoId = "RANDOM_UUID"
-        val dataPedido = LocalDate.of(2024, 6, 10)
-        val status = "PENDENTE"
-        val usuario = User(
+    fun `postOrderCar calls apiService with mapped DTO from Lead`() = runTest(testDispatcher) {
+        val user = User(
             cpf = "12345678900",
             name = "Maria",
             email = "maria@email.com",
             phone = "11999999999",
             birthday = LocalDate.of(1990, 1, 1)
         )
-        val carro = Car(
+        val car = Car(
             id = 1,
             cadastro = LocalDate.of(2023, 1, 1),
             modeloId = 10,
@@ -106,30 +106,34 @@ class CarApiRepositoryTest {
             nomeModelo = "Sedan",
             valor = 50000.0
         )
+        val lead = Lead(
+            id = "LEAD_ID",
+            date = LocalDate.of(2024, 6, 10),
+            status = "PENDENTE",
+            car = car,
+            user = user
+        )
         val expectedDTO = mockk<OrderCarDTO>(relaxed = true)
 
-        coEvery { orderCarMapper.toOrderCarDTO(pedidoId, dataPedido, status, usuario, carro) } returns expectedDTO
+        coEvery { orderCarMapper.toOrderCarDTO(lead) } returns expectedDTO
         coEvery { apiService.postOrderCar(expectedDTO) } returns Unit
 
-        repository.postOrderCar(pedidoId, dataPedido, status, usuario, carro)
+        repository.postOrderCar(lead)
 
-        coVerify(exactly = 1) { orderCarMapper.toOrderCarDTO(pedidoId, dataPedido, status, usuario, carro) }
+        coVerify(exactly = 1) { orderCarMapper.toOrderCarDTO(lead) }
         coVerify(exactly = 1) { apiService.postOrderCar(expectedDTO) }
     }
 
     @Test
     fun `postOrderCar propagates exception from apiService`() = runTest(testDispatcher) {
-        val pedidoId = "RANDOM_UUID"
-        val dataPedido = LocalDate.of(2024, 6, 10)
-        val status = "PENDENTE"
-        val usuario = User(
+        val user = User(
             cpf = "12345678900",
             name = "Maria",
             email = "maria@email.com",
             phone = "11999999999",
             birthday = LocalDate.of(1990, 1, 1)
         )
-        val carro = Car(
+        val car = Car(
             id = 1,
             cadastro = LocalDate.of(2023, 1, 1),
             modeloId = 10,
@@ -140,17 +144,75 @@ class CarApiRepositoryTest {
             nomeModelo = "Sedan",
             valor = 50000.0
         )
+        val lead = Lead(
+            id = "LEAD_ID",
+            date = LocalDate.of(2024, 6, 10),
+            status = "PENDENTE",
+            car = car,
+            user = user
+        )
         val expectedDTO = mockk<OrderCarDTO>(relaxed = true)
 
-        coEvery { orderCarMapper.toOrderCarDTO(pedidoId, dataPedido, status, usuario, carro) } returns expectedDTO
+        coEvery { orderCarMapper.toOrderCarDTO(lead) } returns expectedDTO
         coEvery { apiService.postOrderCar(expectedDTO) } throws RuntimeException("API error")
 
         try {
-            repository.postOrderCar(pedidoId, dataPedido, status, usuario, carro)
+            repository.postOrderCar(lead)
             assertThat("Exception!").isNull()
         } catch (e: Exception) {
             assertThat(e).isInstanceOf(RuntimeException::class.java)
             assertThat(e.message).isEqualTo("API error")
+        }
+    }
+
+    @Test
+    fun `fetchCars propagates exception from apiService`() = runTest(testDispatcher) {
+        coEvery { apiService.getCars() } throws RuntimeException("API error")
+        try {
+            repository.fetchCars()
+            assertThat("Exception!").isNull()
+        } catch (e: Exception) {
+            assertThat(e).isInstanceOf(RuntimeException::class.java)
+            assertThat(e.message).isEqualTo("API error")
+        }
+    }
+
+    @Test
+    fun `postOrderCar propagates exception from mapper`() = runTest(testDispatcher) {
+        val user = User(
+            cpf = "12345678900",
+            name = "Maria",
+            email = "maria@email.com",
+            phone = "11999999999",
+            birthday = LocalDate.of(1990, 1, 1)
+        )
+        val car = Car(
+            id = 1,
+            cadastro = LocalDate.of(2023, 1, 1),
+            modeloId = 10,
+            ano = 2022,
+            fuelType = FuelType.FLEX,
+            numPortas = 4,
+            cor = "Preto",
+            nomeModelo = "Sedan",
+            valor = 50000.0
+        )
+        val lead = Lead(
+            id = "LEAD_ID",
+            date = LocalDate.of(2024, 6, 10),
+            status = "PENDENTE",
+            car = car,
+            user = user
+        )
+
+        coEvery { orderCarMapper.toOrderCarDTO(lead) } throws IllegalArgumentException("Invalid lead")
+
+        try {
+            repository.postOrderCar(lead)
+            assertThat("Exception!").isNull()
+        } catch (e: Exception) {
+            assertThat(e).isInstanceOf(IllegalArgumentException::class.java)
+            assertThat(e.message).isEqualTo("Invalid lead")
         }
     }
 }
