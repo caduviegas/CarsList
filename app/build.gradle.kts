@@ -36,7 +36,6 @@ android {
     }
     sourceSets["main"].java.srcDirs("src/main/kotlin")
     sourceSets["test"].java.srcDirs("src/test/kotlin")
-    sourceSets["androidTest"].java.srcDirs("src/androidTest/kotlin")
     buildFeatures {
         compose = true
     }
@@ -76,7 +75,5 @@ dependencies {
     testImplementation(libs.test.coroutines)
     testImplementation(libs.test.androidx.core.ktx)
     testImplementation(libs.room.testing)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.compose.ui.tooling)
 }
