@@ -46,6 +46,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    implementation(libs.koin)
+    implementation(libs.koin.compose)
+
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
@@ -75,6 +78,7 @@ dependencies {
     testImplementation(libs.test.mockk)
     testImplementation(libs.test.coroutines)
     testImplementation(libs.test.androidx.core.ktx)
+    testImplementation(libs.test.koin)
     testImplementation(libs.room.testing)
     debugImplementation(libs.compose.ui.tooling)
 }
