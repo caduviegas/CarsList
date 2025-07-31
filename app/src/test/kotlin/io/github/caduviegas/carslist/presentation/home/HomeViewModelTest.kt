@@ -35,6 +35,7 @@ class HomeViewModelTest {
 
         assertThat(viewModel.isLoggedIn.value).isNull()
         viewModel.validateUser()
+        testDispatcher.scheduler.advanceTimeBy(2000)
         testDispatcher.scheduler.advanceUntilIdle()
         assertThat(viewModel.isLoggedIn.value).isTrue()
     }
