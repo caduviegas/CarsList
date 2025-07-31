@@ -52,7 +52,6 @@ fun LoginScreen(
         )
     }
 
-    // Atualiza erro
     LaunchedEffect(uiState) {
         if (uiState is LoginUiState.Error) {
             showError = true

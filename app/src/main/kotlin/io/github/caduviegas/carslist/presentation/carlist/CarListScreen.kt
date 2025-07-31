@@ -72,6 +72,20 @@ fun CarListScreen(
                         )
                     }
                 },
+                actions = {
+                    IconButton(onClick = { navController.navigate(CarsDestinations.LEADS) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_cart),
+                            contentDescription = "Leads"
+                        )
+                    }
+                    IconButton(onClick = { navController.navigate(CarsDestinations.LOGOUT) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_person),
+                            contentDescription = "Login"
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = CarColor.Primary
                 )
