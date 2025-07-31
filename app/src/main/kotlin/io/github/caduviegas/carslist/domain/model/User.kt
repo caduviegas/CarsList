@@ -1,4 +1,4 @@
- package io.github.caduviegas.carslist.domain.model
+package io.github.caduviegas.carslist.domain.model
 
 import java.time.LocalDate
 
