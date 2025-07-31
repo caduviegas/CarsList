@@ -21,6 +21,7 @@ mockk = "1.13.10"
 activityCompose = "1.10.1"
 navigationCompose = "2.9.2"
 workRuntime = "2.10.2"
+koin = "4.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +60,10 @@ test-truth = { group = "com.google.truth", name = "truth", version.ref = "truth"
 test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 test-androidx-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "testCoreKtx" }
 test-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+test-koin = { group = "io.insert-koin", name= "koin-test-junit4", version.ref = "koin" }
+
+koin = { group = "io.insert-koin", name= "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name= "koin-androidx-compose", version.ref = "koin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
