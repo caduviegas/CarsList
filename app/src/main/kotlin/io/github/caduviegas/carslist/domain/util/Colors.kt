@@ -9,7 +9,7 @@ object CarColor {
 
     val Secondary = Color(0xFF9B9893)
     val SecondaryVariant = Color(0xFF6E6B67)
-    val SecondaryLight = Color(0xFFC7C5C2)
+    val SecondaryLight = Color(0xFFF0F0F0)
 
     val Background = Color(0xFFFFFDF7)
     val Surface = Color(0xFFFFFFFF)

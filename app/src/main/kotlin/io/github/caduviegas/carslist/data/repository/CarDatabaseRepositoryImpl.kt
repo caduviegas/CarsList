@@ -76,6 +76,15 @@ class CarDatabaseRepositoryImpl(
         }
     }
 
+    override suspend fun getAllLeads(): List<Lead> {
+        if (userDao.hasLoggedUser().not()) return emptyList()
+        val userEntity = userDao.getLoggedUser()
+        val leads = leadDao.getAllPedidos()
+        return leads.map { lead ->
+            LeadMapper.toLead(lead, userEntity)
+        }
+    }
+
     override suspend fun deleteAllData() {
         leadDao.deleteAllPedidos()
         userDao.deleteAllUsers()

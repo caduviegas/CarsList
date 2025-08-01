@@ -1,6 +1,7 @@
 package io.github.caduviegas.carslist.di
 
 import io.github.caduviegas.carslist.domain.usecase.HasLoggedUserUseCase
+import io.github.caduviegas.carslist.domain.usecase.ListAllLeadsUseCase
 import io.github.caduviegas.carslist.domain.usecase.ListCarsUseCase
 import io.github.caduviegas.carslist.domain.usecase.ListLeadsByCarUseCase
 import io.github.caduviegas.carslist.domain.usecase.LoginUseCase
@@ -13,6 +14,7 @@ val useCaseModule = module {
     factory { HasLoggedUserUseCase(get()) }
     factory { ListCarsUseCase(get()) }
     factory { ListLeadsByCarUseCase(get()) }
+    factory { ListAllLeadsUseCase(get()) }
     factory { LoginUseCase(get()) }
     factory { LogoutUseCase(get()) }
     factory { SaveLeadUseCase(get()) }

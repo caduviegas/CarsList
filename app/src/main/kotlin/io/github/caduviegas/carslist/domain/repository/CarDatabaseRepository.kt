@@ -9,6 +9,7 @@ interface CarDatabaseRepository {
     suspend fun getLoggedUser(): User
     suspend fun updateLeadStatus(id: String, status: String)
     suspend fun getLeadsByCarId(carId: Int): List<Lead>
+    suspend fun getAllLeads(): List<Lead>
     suspend fun deleteAllData()
     suspend fun saveUser(user: User)
 }

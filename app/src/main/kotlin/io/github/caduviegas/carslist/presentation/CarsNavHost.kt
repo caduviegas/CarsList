@@ -9,6 +9,7 @@ import io.github.caduviegas.carslist.presentation.carlist.CarListScreen
 import io.github.caduviegas.carslist.presentation.home.HomeScreen
 import io.github.caduviegas.carslist.presentation.leads.LeadsScreen
 import io.github.caduviegas.carslist.presentation.login.LoginScreen
+import io.github.caduviegas.carslist.presentation.logout.LogoutScreen
 
 object CarsDestinations {
     const val HOME = "home"
@@ -16,6 +17,7 @@ object CarsDestinations {
     const val CAR_LIST = "cars_list"
     const val LEADS = "leads"
     const val CAR_DETAILS = "car_details"
+    const val LOGOUT = "logout"
 }
 
 @Composable
@@ -35,6 +37,9 @@ fun CarsNavHost(navController: NavHostController) {
         }
         composable(CarsDestinations.CAR_DETAILS) {
             CarDetailsScreen(navController)
+        }
+        composable(CarsDestinations.LOGOUT) {
+            LogoutScreen(navController)
         }
     }
 }
