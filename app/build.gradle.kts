@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -40,6 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+detekt {
+    config.setFrom("$rootDir/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
 }
 
 dependencies {
