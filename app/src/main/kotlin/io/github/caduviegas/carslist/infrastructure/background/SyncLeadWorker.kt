@@ -6,13 +6,14 @@ import androidx.work.WorkerParameters
 import io.github.caduviegas.carslist.domain.model.LeadStatus
 import io.github.caduviegas.carslist.domain.usecase.SyncLeadUseCase
 import io.github.caduviegas.carslist.infrastructure.notification.NotificationUtils
+import org.koin.core.component.KoinComponent
 
 class SyncLeadWorker(
     private val context: Context,
-    params: WorkerParameters,
-    private val syncLeadUseCase: SyncLeadUseCase
-) : CoroutineWorker(context, params) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params), KoinComponent {
 
+    val syncLeadUseCase: SyncLeadUseCase = getKoin().get()
 
     override suspend fun doWork(): Result {
         return try {
