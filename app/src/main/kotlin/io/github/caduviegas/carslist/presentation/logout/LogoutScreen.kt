@@ -27,8 +27,10 @@ fun LogoutScreen(
     LaunchedEffect(uiState) {
         when (uiState) {
             is LogoutUiState.Success -> {
-                navController.navigate(CarsDestinations.HOME)
-            }
+                navController.navigate(CarsDestinations.HOME) {
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }            }
             else -> {}
         }
     }

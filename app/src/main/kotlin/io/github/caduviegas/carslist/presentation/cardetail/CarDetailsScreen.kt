@@ -23,6 +23,8 @@ import androidx.navigation.NavController
 import io.github.caduviegas.carslist.R
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.util.CarColor
+import io.github.caduviegas.carslist.presentation.CarsDestinations
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 
@@ -35,7 +37,10 @@ fun CarDetailsScreen(
     val car by viewModel.car.collectAsState()
     val uiState by viewModel.leadSaveUiState.collectAsState()
     var showError by remember { mutableStateOf(false) }
-    val errorMessage = "Falha ao salvar intenção de compra"
+    var errorMessage by remember { mutableStateOf("") }
+
+    val errorDuration = 3000L
+    var errorProgress by remember { mutableFloatStateOf(1f) }
 
     LaunchedEffect(Unit) {
         val carNav = navController.previousBackStackEntry
@@ -45,7 +50,25 @@ fun CarDetailsScreen(
     }
 
     LaunchedEffect(uiState) {
-        showError = uiState == LeadSaveUiState.Error
+        showError = uiState in listOf(LeadSaveUiState.Error, LeadSaveUiState.NoUser)
+        errorMessage = when (uiState) {
+            LeadSaveUiState.Error -> "Ocorreu um erro ao salvar o lead. Tente novamente."
+            LeadSaveUiState.NoUser -> "Primeiro crie uma conta antes de comprar carro"
+            else -> ""
+        }
+    }
+
+    LaunchedEffect(showError) {
+        if (showError) {
+            errorProgress = 1f
+            val steps = 30
+            val stepDuration = errorDuration / steps
+            repeat(steps) {
+                errorProgress = 1f - (it + 1) / steps.toFloat()
+                delay(stepDuration)
+            }
+            showError = false
+        }
     }
 
     Scaffold(
@@ -73,6 +96,17 @@ fun CarDetailsScreen(
                         )
                     }
                 },
+                actions = {
+                    if (uiState == LeadSaveUiState.NoUser) {
+                        TextButton(onClick = { navController.navigate(CarsDestinations.LOGIN) }) {
+                            Text(
+                                text = "ENTRAR",
+                                color = CarColor.OnPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = CarColor.Primary
                 )
@@ -84,7 +118,20 @@ fun CarDetailsScreen(
                     modifier = Modifier.padding(16.dp),
                     containerColor = CarColor.Error,
                     contentColor = CarColor.OnError
-                ) { Text(errorMessage) }
+                ) {
+                    Column {
+                        Text(errorMessage)
+                        LinearProgressIndicator(
+                            progress = { errorProgress },
+                            color = CarColor.OnError,
+                            trackColor = CarColor.Error,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(10.dp)
+                                .padding(top = 8.dp)
+                        )
+                    }
+                }
             }
         }
     ) { innerPadding ->

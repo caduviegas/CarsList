@@ -31,6 +31,7 @@ fun CarListScreen(
     viewModel: CarListViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isUserLoggedIn by viewModel.isUserLoggedIn.collectAsState()
     var showError by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
@@ -45,6 +46,7 @@ fun CarListScreen(
 
     LaunchedEffect(Unit) {
         viewModel.fetchCars()
+        viewModel.checkUserLoggedIn()
     }
 
     Scaffold(
@@ -73,17 +75,27 @@ fun CarListScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { navController.navigate(CarsDestinations.LEADS) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_cart),
-                            contentDescription = "Leads"
-                        )
-                    }
-                    IconButton(onClick = { navController.navigate(CarsDestinations.LOGOUT) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_person),
-                            contentDescription = "Login"
-                        )
+                    if (isUserLoggedIn) {
+                        IconButton(onClick = { navController.navigate(CarsDestinations.LEADS) }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_cart),
+                                contentDescription = "Leads"
+                            )
+                        }
+                        IconButton(onClick = { navController.navigate(CarsDestinations.LOGIN) }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_person),
+                                contentDescription = "Login"
+                            )
+                        }
+                    } else {
+                        TextButton(onClick = { navController.navigate(CarsDestinations.LOGIN) }) {
+                            Text(
+                                text = "ENTRAR",
+                                color = CarColor.OnPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

@@ -16,7 +16,7 @@ class CarDatabaseRepositoryImpl(
     private val userDao: UserDao
 ) : CarDatabaseRepository {
 
-    private suspend fun validateIfHasLoggedUser(){
+    private suspend fun validateIfHasLoggedUser() {
         val hasUser = userDao.hasLoggedUser()
         if (!hasUser) throw UserNotLoggedInException()
     }
@@ -68,11 +68,14 @@ class CarDatabaseRepositoryImpl(
     }
 
     override suspend fun getLeadsByCarId(carId: Int): List<Lead> {
-        validateIfHasLoggedUser()
-        val userEntity = userDao.getLoggedUser()
-        val leads = leadDao.getPedidosByCarroId(carId)
-        return leads.map { pedido ->
-            LeadMapper.toLead(pedido, userEntity)
+        return if (userDao.hasLoggedUser()) {
+            val userEntity = userDao.getLoggedUser()
+            val leads = leadDao.getPedidosByCarroId(carId)
+            leads.map { pedido ->
+                LeadMapper.toLead(pedido, userEntity)
+            }
+        } else {
+            emptyList()
         }
     }
 
