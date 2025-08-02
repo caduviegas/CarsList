@@ -65,6 +65,7 @@ test-koin = { group = "io.insert-koin", name= "koin-test-junit4", version.ref = 
 
 koin = { group = "io.insert-koin", name= "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name= "koin-androidx-compose", version.ref = "koin" }
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
