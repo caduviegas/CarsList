@@ -2,14 +2,14 @@ package io.github.caduviegas.carslist.data.repository
 
 import io.github.caduviegas.carslist.data.db.dao.PedidoCompraDao
 import io.github.caduviegas.carslist.data.db.dao.UserDao
-import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
-import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 import io.github.caduviegas.carslist.data.mapper.LeadMapper
 import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
 import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
 import io.github.caduviegas.carslist.domain.repository.CarDatabaseRepository
 import io.github.caduviegas.carslist.domain.util.OrderConstants
+import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
+import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 
 class CarDatabaseRepositoryImpl(
     private val leadDao: PedidoCompraDao,

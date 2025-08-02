@@ -29,10 +29,18 @@ class SyncLeadWorker(
     }
 
     private fun notifyError() {
-        NotificationUtils.showSilentNotification(context, "Faça login para sincronizar", "Para fazer seus pedidos de compra comece com logi, é rápido")
+        NotificationUtils.showSilentNotification(
+            context,
+            "Faça login para sincronizar",
+            "Para fazer seus pedidos de compra comece com logi, é rápido"
+        )
     }
 
     private fun notifySuccess() {
-        NotificationUtils.showSilentNotification(context, "Pedidos de compra sincronizados", "Aguarde contato de um dos nossos consultores")
+        NotificationUtils.showSilentNotification(
+            context,
+            "Pedidos de compra sincronizados",
+            "Aguarde contato de um dos nossos consultores"
+        )
     }
 }

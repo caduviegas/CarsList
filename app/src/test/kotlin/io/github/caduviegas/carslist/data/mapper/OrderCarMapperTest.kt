@@ -1,9 +1,6 @@
 package io.github.caduviegas.carslist.data.mapper
 
 import com.google.common.truth.Truth.assertThat
-import io.github.caduviegas.carslist.data.model.CarInfoDTO
-import io.github.caduviegas.carslist.data.model.OrderCarDTO
-import io.github.caduviegas.carslist.data.model.UserDTO
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.FuelType
 import io.github.caduviegas.carslist.domain.model.Lead

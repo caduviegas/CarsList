@@ -3,8 +3,6 @@ package io.github.caduviegas.carslist.data.repository
 import com.google.common.truth.Truth.assertThat
 import io.github.caduviegas.carslist.data.db.dao.PedidoCompraDao
 import io.github.caduviegas.carslist.data.db.dao.UserDao
-import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
-import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 import io.github.caduviegas.carslist.data.mapper.LeadMapper
 import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
 import io.github.caduviegas.carslist.domain.model.*
@@ -15,6 +13,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
+import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
+import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CarDatabaseRepositoryTest {
@@ -37,10 +37,14 @@ class CarDatabaseRepositoryTest {
 
         repository.saveLead(lead)
 
-        coVerify(exactly = 1) { leadDao.insertPedido(withArg {
-            assertThat(it.id).isEqualTo(lead.id)
-            assertThat(it.cpfCliente).isEqualTo(lead.user.cpf)
-        }) }
+        coVerify(exactly = 1) {
+            leadDao.insertPedido(
+                withArg {
+                    assertThat(it.id).isEqualTo(lead.id)
+                    assertThat(it.cpfCliente).isEqualTo(lead.user.cpf)
+                }
+            )
+        }
     }
 
     @Test(expected = UserNotLoggedInException::class)
@@ -146,13 +150,17 @@ class CarDatabaseRepositoryTest {
 
         repository.saveUser(user)
 
-        coVerify { userDao.insertUser(withArg {
-            assertThat(it.cpf).isEqualTo(user.cpf)
-            assertThat(it.name).isEqualTo(user.name)
-            assertThat(it.email).isEqualTo(user.email)
-            assertThat(it.phone).isEqualTo(user.phone)
-            assertThat(it.birthday).isEqualTo(user.birthday)
-        }) }
+        coVerify {
+            userDao.insertUser(
+                withArg {
+                    assertThat(it.cpf).isEqualTo(user.cpf)
+                    assertThat(it.name).isEqualTo(user.name)
+                    assertThat(it.email).isEqualTo(user.email)
+                    assertThat(it.phone).isEqualTo(user.phone)
+                    assertThat(it.birthday).isEqualTo(user.birthday)
+                }
+            )
+        }
     }
 
     private fun makeUser() = User(

@@ -2,10 +2,10 @@ package io.github.caduviegas.carslist.data.mapper
 
 import com.google.common.truth.Truth.assertThat
 import io.github.caduviegas.carslist.data.db.entity.PedidoCompra
-import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 import io.github.caduviegas.carslist.domain.model.FuelType
 import org.junit.Test
 import java.time.LocalDate
+import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 
 class LeadMapperTest {
 
@@ -34,7 +34,11 @@ class LeadMapperTest {
         phone: String? = "11999999999",
         birthday: LocalDate? = LocalDate.of(1990, 5, 20)
     ) = UserEntity(
-        cpf, name, email, phone, birthday
+        cpf,
+        name,
+        email,
+        phone,
+        birthday
     )
 
     @Test

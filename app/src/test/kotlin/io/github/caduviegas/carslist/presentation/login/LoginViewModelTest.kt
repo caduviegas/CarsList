@@ -1,7 +1,6 @@
 package io.github.caduviegas.carslist.presentation.login
 
 import com.google.common.truth.Truth.assertThat
-import io.github.caduviegas.carslist.domain.model.User
 import io.github.caduviegas.carslist.domain.usecase.LoginUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify

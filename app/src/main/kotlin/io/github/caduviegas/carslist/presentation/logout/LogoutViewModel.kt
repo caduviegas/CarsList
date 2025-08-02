@@ -17,8 +17,8 @@ class LogoutViewModel(
     fun logout() {
         _uiState.value = LogoutUiState.Loading
         viewModelScope.launch {
-                logoutUseCase()
-                _uiState.value = LogoutUiState.Success
+            logoutUseCase()
+            _uiState.value = LogoutUiState.Success
         }
     }
 }

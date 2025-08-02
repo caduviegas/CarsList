@@ -108,7 +108,7 @@ class UserDaoTest {
     }
 
     @Test(expected = Exception::class)
-    fun `getLoggedUser should throw when no user exists`(){
+    fun `getLoggedUser should throw when no user exists`() {
         runBlocking {
             userDao.getLoggedUser()
         }

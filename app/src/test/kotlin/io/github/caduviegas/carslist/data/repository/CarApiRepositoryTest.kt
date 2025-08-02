@@ -12,12 +12,12 @@ import io.github.caduviegas.carslist.domain.model.FuelType
 import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
 import io.github.caduviegas.carslist.domain.repository.CarApiRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.runTest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate

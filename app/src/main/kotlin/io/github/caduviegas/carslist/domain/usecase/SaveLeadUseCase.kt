@@ -1,11 +1,11 @@
 package io.github.caduviegas.carslist.domain.usecase
 
+import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.LeadStatus
 import io.github.caduviegas.carslist.domain.repository.CarDatabaseRepository
 import io.github.caduviegas.carslist.domain.util.OrderConstants
-import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
 import java.time.LocalDate
 import java.util.UUID
 

@@ -21,4 +21,3 @@ object CarColor {
     val OnSurface = Color(0xFF222222)
     val OnError = Color(0xFFFFFFFF)
 }
-

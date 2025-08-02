@@ -15,4 +15,4 @@ data class Car(
     val cor: String,
     val nomeModelo: String,
     val valor: Double
-): Parcelable
+) : Parcelable

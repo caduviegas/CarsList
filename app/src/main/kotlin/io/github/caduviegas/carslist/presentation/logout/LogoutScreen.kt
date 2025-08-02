@@ -30,7 +30,8 @@ fun LogoutScreen(
                 navController.navigate(CarsDestinations.HOME) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
-                }            }
+                }
+            }
             else -> {}
         }
     }

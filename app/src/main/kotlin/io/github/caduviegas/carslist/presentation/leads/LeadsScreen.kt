@@ -83,8 +83,8 @@ fun LeadsScreen(
                 item {
                     Text(
                         text = "Aqui são exibidos os seus pedidos de compra de carro (leads). " +
-                                "Se o status do lead for \"Aguardando Sincronizar\" você deve aguardar uma rotina automática que sincroniza leads de 1h em 1h. " +
-                                "Se o status for \"Sincronizado\" o pedido já foi enviado para nossos servidores e basta aguardar contato de um dos nossos consultores.",
+                            "Se o status do lead for \"Aguardando Sincronizar\" você deve aguardar uma rotina automática que sincroniza leads de 1h em 1h. " +
+                            "Se o status for \"Sincronizado\" o pedido já foi enviado para nossos servidores e basta aguardar contato de um dos nossos consultores.",
                         color = CarColor.OnSurface,
                         fontSize = 14.sp,
                         modifier = Modifier

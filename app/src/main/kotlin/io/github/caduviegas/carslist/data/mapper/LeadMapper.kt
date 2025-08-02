@@ -1,11 +1,11 @@
 package io.github.caduviegas.carslist.data.mapper
 
-import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
-import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.FuelType
 import io.github.caduviegas.carslist.domain.model.Lead
 import io.github.caduviegas.carslist.domain.model.User
+import io.github.caduviegas.carslist.data.db.entity.PedidoCompra as LeadEntity
+import io.github.caduviegas.carslist.data.db.entity.User as UserEntity
 
 object LeadMapper {
     fun toLead(

@@ -1,7 +1,7 @@
 package io.github.caduviegas.carslist.domain.usecase
 
-import io.github.caduviegas.carslist.domain.repository.CarDatabaseRepository
 import io.github.caduviegas.carslist.domain.exception.UserNotLoggedInException
+import io.github.caduviegas.carslist.domain.repository.CarDatabaseRepository
 
 class HasLoggedUserUseCase(
     private val repository: CarDatabaseRepository

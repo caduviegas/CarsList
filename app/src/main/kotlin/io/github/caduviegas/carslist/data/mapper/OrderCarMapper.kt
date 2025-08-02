@@ -1,12 +1,11 @@
 package io.github.caduviegas.carslist.data.mapper
 
-import io.github.caduviegas.carslist.domain.model.User
-import io.github.caduviegas.carslist.domain.model.Car
-import io.github.caduviegas.carslist.data.model.UserDTO
 import io.github.caduviegas.carslist.data.model.CarInfoDTO
 import io.github.caduviegas.carslist.data.model.OrderCarDTO
+import io.github.caduviegas.carslist.data.model.UserDTO
+import io.github.caduviegas.carslist.domain.model.Car
 import io.github.caduviegas.carslist.domain.model.Lead
-import java.time.LocalDate
+import io.github.caduviegas.carslist.domain.model.User
 import java.time.ZoneId
 
 class OrderCarMapper {

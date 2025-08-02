@@ -12,12 +12,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
-import io.github.caduviegas.carslist.presentation.CarsDestinations
-import org.koin.androidx.compose.koinViewModel
-import io.github.caduviegas.carslist.domain.util.then
 import io.github.caduviegas.carslist.R
 import io.github.caduviegas.carslist.domain.util.CarColor
+import io.github.caduviegas.carslist.domain.util.then
+import io.github.caduviegas.carslist.presentation.CarsDestinations
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(

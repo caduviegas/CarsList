@@ -9,7 +9,8 @@ import java.util.concurrent.TimeUnit
 object SyncLeadScheduler {
     fun schedule(context: Context) {
         val workRequest = PeriodicWorkRequestBuilder<SyncLeadWorker>(
-            1, TimeUnit.HOURS
+            1,
+            TimeUnit.HOURS
         ).build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(

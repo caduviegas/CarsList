@@ -2,8 +2,8 @@ package io.github.caduviegas.carslist.presentation.carlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.github.caduviegas.carslist.domain.usecase.ListCarsUseCase
 import io.github.caduviegas.carslist.domain.usecase.HasLoggedUserUseCase
+import io.github.caduviegas.carslist.domain.usecase.ListCarsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

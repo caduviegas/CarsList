@@ -48,7 +48,9 @@ fun LoginScreen(
             { _, year, month, dayOfMonth ->
                 dataNascimento = "%02d/%02d/%04d".format(dayOfMonth, month + 1, year)
             },
-            1995, 0, 1
+            1995,
+            0,
+            1
         )
     }
 
