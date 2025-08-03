@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/WorkManager-Background--Sync-9cf.svg?style=flat" alt="WorkManager">
   <img src="https://img.shields.io/badge/Clean%20Architecture-Yes-success.svg?style=flat" alt="Clean Architecture">
   <img src="https://img.shields.io/badge/Unit%20Tests-100%25-brightgreen.svg?style=flat" alt="Unit Tests">
-  <img src="https://img.shields.io/github/actions/workflow/status/caduviegas/CarsList/android.yml?branch=main" alt="GitHub Actions Status">
+  <img src="https://img.shields.io/github/actions/workflow/status/caduviegas/CarsList/build-and-deploy.yml?branch=main" alt="GitHub Actions Status">
   <img src="https://img.shields.io/github/license/caduviegas/CarsList" alt="License">
 </p>
 
