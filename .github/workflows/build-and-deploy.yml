@@ -81,6 +81,12 @@ jobs:
           set -o pipefail
           ./gradlew assembleRelease | tee assemble.log
 
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/release/*.apk
+
   create_release:
     name: Create Release and Tag
     runs-on: ubuntu-latest
@@ -88,6 +94,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/release
 
       - name: Get version name
         id: version_check
