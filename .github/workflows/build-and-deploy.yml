@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: |
           set -o pipefail
-          ./gradlew build | tee build.log
+          ./gradlew assemble | tee build.log
 
   validate_version:
     name: Validate Version Number
