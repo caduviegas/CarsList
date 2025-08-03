@@ -27,7 +27,7 @@
 ## ✨ Demonstração
 
 <p align="center">
-  <img src=".github/img/demo.gif" alt="Demonstração do aplicativo" height="60%" />
+  <img src=".github/img/demo.gif" alt="Demonstração do aplicativo" height="20%" />
 </p>
 
 ---
