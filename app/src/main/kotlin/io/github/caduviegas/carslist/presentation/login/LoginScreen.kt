@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import io.github.caduviegas.carslist.R
 import io.github.caduviegas.carslist.domain.util.CarColor
+import io.github.caduviegas.carslist.presentation.CarsDestinations
 import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
@@ -60,6 +61,12 @@ fun LoginScreen(
             errorMessage = (uiState as LoginUiState.Error).message
         } else {
             showError = false
+        }
+        if (uiState is LoginUiState.Success) {
+            navController.navigate(CarsDestinations.CAR_LIST) {
+                popUpTo(0) { inclusive = true }
+                launchSingleTop = true
+            }
         }
     }
 

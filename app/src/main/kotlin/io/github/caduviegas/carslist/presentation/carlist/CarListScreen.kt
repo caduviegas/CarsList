@@ -82,10 +82,10 @@ fun CarListScreen(
                                 contentDescription = "Leads"
                             )
                         }
-                        IconButton(onClick = { navController.navigate(CarsDestinations.LOGIN) }) {
+                        IconButton(onClick = { navController.navigate(CarsDestinations.LOGOUT) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_person),
-                                contentDescription = "Login"
+                                contentDescription = "Logout"
                             )
                         }
                     } else {

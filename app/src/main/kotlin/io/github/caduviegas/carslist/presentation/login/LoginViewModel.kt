@@ -36,10 +36,8 @@ class LoginViewModel(
             _uiState.value = LoginUiState.Error("Email é obrigatório")
             return
         }
-
-        _uiState.value = LoginUiState.Loading
-
         viewModelScope.launch {
+            _uiState.value = LoginUiState.Loading
             try {
                 val user = User(
                     cpf = cpf,
